@@ -4,7 +4,7 @@
  * ++m[arr[i]];
  * unordered_set s;
  * check
- * 
+ *
  * 2. using index
  * ++arr[arr[i]+1000];
  * find duplicates in arr

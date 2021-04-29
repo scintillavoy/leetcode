@@ -9,23 +9,23 @@
 using namespace std;
 
 class Solution {
-public:
-    int climbStairs(int n) {
-        int prev = 1;
-        int curr = 1;
-        for (int i = 2; i <= n; ++i) {
-            int temp = prev;
-            prev = curr;
-            curr = temp + prev;
-        }
-        return curr;
+ public:
+  int climbStairs(int n) {
+    int prev = 1;
+    int curr = 1;
+    for (int i = 2; i <= n; ++i) {
+      int temp = prev;
+      prev = curr;
+      curr = temp + prev;
     }
+    return curr;
+  }
 };
 
 int main() {
-    Solution sol;
-    for (int i = 1; i <= 45; ++i) {
-        cout << "climbStairs(" << i << "): " << sol.climbStairs(i) << endl;
-    }
-    return 0;
+  Solution sol;
+  for (int i = 1; i <= 45; ++i) {
+    cout << "climbStairs(" << i << "): " << sol.climbStairs(i) << endl;
+  }
+  return 0;
 }
