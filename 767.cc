@@ -11,7 +11,7 @@ class Solution {
     for (const auto c : s) {
       ++counts[c - 'a'];
     }
-    priority_queue<pair<int, int>> pq;
+    priority_queue<pair<int, char>> pq;
     for (int i = 0; i < counts.size(); ++i) {
       if (counts[i] > 0) {
         pq.push({counts[i], i + 'a'});
