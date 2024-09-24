@@ -1,17 +1,17 @@
 #include <string>
 #include <unordered_map>
-#include <vector>
 using namespace std;
 
 class Trie {
  public:
-  Trie() { root = new Node(); }
+  Trie() { root = new TrieNode(); }
+  ~Trie() { delete_trie(root); }
 
   void insert(string word) {
-    Node *curr = root;
+    TrieNode *curr = root;
     for (int i = 0; i < word.size(); ++i) {
       if (curr->children.count(word[i]) == 0) {
-        curr->children[word[i]] = new Node();
+        curr->children[word[i]] = new TrieNode();
       }
       curr = curr->children[word[i]];
     }
@@ -19,7 +19,7 @@ class Trie {
   }
 
   bool search(string word) {
-    Node *curr = root;
+    TrieNode *curr = root;
     for (int i = 0; i < word.size(); ++i) {
       if (curr->children.count(word[i]) == 0) {
         return false;
@@ -30,7 +30,7 @@ class Trie {
   }
 
   bool startsWith(string prefix) {
-    Node *curr = root;
+    TrieNode *curr = root;
     for (int i = 0; i < prefix.size(); ++i) {
       if (curr->children.count(prefix[i]) == 0) {
         return false;
@@ -41,13 +41,22 @@ class Trie {
   }
 
  private:
-  struct Node {
-    bool exist;
-    unordered_map<char, Node *> children;
-    Node() : exist(false), children({}) {}
+  struct TrieNode {
+    bool exist = false;
+    unordered_map<char, TrieNode *> children;
   };
 
-  Node *root;
+  TrieNode *root;
+
+  void delete_trie(TrieNode *node) {
+    if (node == nullptr) {
+      return;
+    }
+    for (auto it = node->children.begin(); it != node->children.end(); ++it) {
+      delete_trie(it->second);
+    }
+    delete node;
+  }
 };
 
 /**
