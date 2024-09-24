@@ -42,14 +42,14 @@ class Trie {
 class Solution {
  public:
   int minExtraChar(string s, vector<string>& dictionary) {
-    Trie* trie = new Trie();
+    Trie trie;
     for (const auto& word : dictionary) {
-      trie->insert(word);
+      trie.insert(word);
     }
     vector<int> min_extras(s.size() + 1);
     for (int start = s.size() - 1; start >= 0; --start) {
       min_extras[start] = min_extras[start + 1] + 1;
-      TrieNode* node = trie->root;
+      TrieNode* node = trie.root;
       for (int end = start; end < s.size(); ++end) {
         int index = s[end] - 'a';
         if (node->children[index] == nullptr) {
