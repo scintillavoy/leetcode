@@ -51,16 +51,16 @@ class Trie {
 class Solution {
  public:
   string longestWord(vector<string> &words) {
-    Trie *trie = new Trie();
+    Trie trie;
     for (const auto &word : words) {
-      trie->insert(word);
+      trie.insert(word);
     }
     string longest_word;
     for (const auto &word : words) {
       if (word.size() < longest_word.size()) {
         continue;
       }
-      if (trie->search(word) &&
+      if (trie.search(word) &&
           (word.size() > longest_word.size() || word < longest_word)) {
         longest_word = word;
       }
