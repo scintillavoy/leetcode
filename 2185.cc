@@ -4,13 +4,14 @@ using namespace std;
 
 class Trie {
  public:
-  Trie() { root = new Node(); }
+  Trie() { root = new TrieNode(); }
+  ~Trie() { delete_trie(root); }
 
   void insert(const string& word) {
-    Node* curr = root;
+    TrieNode* curr = root;
     for (const auto c : word) {
       if (curr->children[c - 'a'] == nullptr) {
-        curr->children[c - 'a'] = new Node();
+        curr->children[c - 'a'] = new TrieNode();
       }
       curr = curr->children[c - 'a'];
       ++curr->count;
@@ -19,7 +20,7 @@ class Trie {
   }
 
   int count_by_prefix(const string& prefix) {
-    Node* curr = root;
+    TrieNode* curr = root;
     for (const auto c : prefix) {
       if (curr->children[c - 'a'] == nullptr) {
         return 0;
@@ -30,14 +31,23 @@ class Trie {
   }
 
  private:
-  struct Node {
-    int count;
-    bool is_end;
-    vector<Node*> children;
-    Node() : count(0), is_end(false), children(vector<Node*>(26, nullptr)) {}
+  struct TrieNode {
+    int count = 0;
+    bool is_end = false;
+    vector<TrieNode*> children = vector<TrieNode*>(26);
   };
 
-  Node* root;
+  TrieNode* root;
+
+  void delete_trie(TrieNode* node) {
+    if (node == nullptr) {
+      return;
+    }
+    for (auto it = node->children.begin(); it != node->children.end(); ++it) {
+      delete_trie(*it);
+    }
+    delete node;
+  }
 };
 
 class Solution {
