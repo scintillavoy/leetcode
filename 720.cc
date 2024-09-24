@@ -7,21 +7,23 @@ class Trie {
   Trie() { root = new TrieNode(); }
   ~Trie() { delete_trie(root); }
 
-  void insert(string word) {
+  void insert(const string &word) {
     TrieNode *curr = root;
     for (int i = 0; i < word.size(); ++i) {
-      if (curr->children[word[i] - 'a'] == nullptr) {
-        curr->children[word[i] - 'a'] = new TrieNode();
+      int index = word[i] - 'a';
+      if (curr->children[index] == nullptr) {
+        curr->children[index] = new TrieNode();
       }
-      curr = curr->children[word[i] - 'a'];
+      curr = curr->children[index];
     }
     curr->exist = true;
   }
 
-  bool search(string word) {
+  bool search(const string &word) {
     TrieNode *curr = root;
     for (int i = 0; i < word.size(); ++i) {
-      curr = curr->children[word[i] - 'a'];
+      int index = word[i] - 'a';
+      curr = curr->children[index];
       if (curr == nullptr || !curr->exist) {
         return false;
       }
