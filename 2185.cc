@@ -10,10 +10,11 @@ class Trie {
   void insert(const string& word) {
     TrieNode* curr = root;
     for (const auto c : word) {
-      if (curr->children[c - 'a'] == nullptr) {
-        curr->children[c - 'a'] = new TrieNode();
+      int index = c - 'a';
+      if (curr->children[index] == nullptr) {
+        curr->children[index] = new TrieNode();
       }
-      curr = curr->children[c - 'a'];
+      curr = curr->children[index];
       ++curr->count;
     }
     curr->is_end = true;
@@ -22,10 +23,11 @@ class Trie {
   int count_by_prefix(const string& prefix) {
     TrieNode* curr = root;
     for (const auto c : prefix) {
-      if (curr->children[c - 'a'] == nullptr) {
+      int index = c - 'a';
+      if (curr->children[index] == nullptr) {
         return 0;
       }
-      curr = curr->children[c - 'a'];
+      curr = curr->children[index];
     }
     return curr->count;
   }
@@ -53,10 +55,10 @@ class Trie {
 class Solution {
  public:
   int prefixCount(vector<string>& words, string pref) {
-    Trie* trie = new Trie();
+    Trie trie;
     for (const auto& word : words) {
-      trie->insert(word);
+      trie.insert(word);
     }
-    return trie->count_by_prefix(pref);
+    return trie.count_by_prefix(pref);
   }
 };
