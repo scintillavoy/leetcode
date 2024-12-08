@@ -26,7 +26,7 @@ class Solution {
       }
       dp[i] = max(dp[i], dp[i + 1]);
     }
-    return *max_element(dp.cbegin(), dp.cend());
+    return dp.front();
   }
 
  private:
