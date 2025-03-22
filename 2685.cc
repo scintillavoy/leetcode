@@ -1,4 +1,3 @@
-#include <queue>
 #include <vector>
 using namespace std;
 
@@ -11,7 +10,7 @@ class Solution {
       graph[edge[1]].push_back(edge[0]);
     }
     int answer = 0;
-    vector<int> visited(n);
+    vector<bool> visited(n);
     for (int i = 0; i < n; ++i) {
       if (visited[i]) {
         continue;
