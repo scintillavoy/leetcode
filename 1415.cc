@@ -4,29 +4,23 @@ using namespace std;
 class Solution {
  public:
   string getHappyString(int n, int k) {
-    int count = 0;
+    if (3 << (n - 1) < k) {
+      return "";
+    }
     string happy_string;
-    find(n, k, count, happy_string);
+    for (int i = 1 << (n - 1); i > 0; i >>= 1) {
+      for (int j = 0; j < 3; ++j) {
+        char next_char = 'a' + j;
+        if (!happy_string.empty() && happy_string.back() == next_char) {
+          continue;
+        }
+        if (i >= k) {
+          happy_string.push_back(next_char);
+          break;
+        }
+        k -= i;
+      }
+    }
     return happy_string;
-  }
-
- private:
-  bool find(int n, int k, int &count, string &str) {
-    if (str.size() == n) {
-      ++count;
-      return count == k;
-    }
-    for (int i = 0; i < 3; ++i) {
-      char next_char = 'a' + i;
-      if (!str.empty() && str.back() == next_char) {
-        continue;
-      }
-      str.push_back(next_char);
-      if (find(n, k, count, str)) {
-        return true;
-      }
-      str.pop_back();
-    }
-    return false;
   }
 };
