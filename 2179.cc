@@ -2,11 +2,8 @@
 using namespace std;
 
 class FenwickTree {
- private:
-  vector<int> tree;
-
  public:
-  FenwickTree(int size) : tree(size + 1, 0) {}
+  FenwickTree(int size) : tree(size + 1) {}
 
   void update(int index, int delta) {
     ++index;
@@ -25,6 +22,9 @@ class FenwickTree {
     }
     return result;
   }
+
+ private:
+  vector<int> tree;
 };
 
 class Solution {
@@ -40,11 +40,11 @@ class Solution {
     }
     FenwickTree tree(n);
     long long num_of_good_triplets = 0;
-    for (int value = 0; value < n; ++value) {
-      int pos = indices2_to_indices1[value];
-      int left = tree.query(pos);
-      tree.update(pos, 1);
-      int right = (n - 1 - pos) - (value - left);
+    for (int index2 = 0; index2 < n; ++index2) {
+      int index1 = indices2_to_indices1[index2];
+      int left = tree.query(index1);
+      tree.update(index1, 1);
+      int right = (n - 1 - index1) - (index2 - left);
       num_of_good_triplets += (long long)left * right;
     }
     return num_of_good_triplets;
